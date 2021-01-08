@@ -98,14 +98,21 @@ class Controller(polyinterface.Controller):
 
     def discover(self, *args, **kwargs):
         count = 1
-        for hostmac in self.twinkly_host.split(','):
-            uniq_name = "t" + "_" + hostmac.replace(".","") + "_" + str(count)
-            myhash =  str(int(hashlib.md5(uniq_name.encode('utf8')).hexdigest(), 16) % (10 ** 8))
-            self.addNode(TwinklyLight(self,myhash, uniq_name , uniq_name, hostmac ))
-            count = count + 1
-
+        
+        api = Api(timeout=20)
+        authenticator = Authenticator(api, "email", self.email, self.password, install_id=self.install_id, access_token_cache_file="augustToken.txt")
+        authentication = authenticator.authenticate()
+        if ( authentication.state is AuthenticationState.AUTHENTICATED ) :
+            locks = api.get_locks(authentication.access_token)
+            for lock in locks:
+                myhash =  str(int(hashlib.md5(locks.device_id.encode('utf8')).hexdigest(), 16) % (10 ** 8))
+                self.addNode(AugustLock(self,myhash, "lock_" + str(count) ,  "lock_" + str(count),api, authentication, lock ))
+                count = count + 1
+        else :
+            LOGGER.error('August requires validation')
+        
     def delete(self):
-        LOGGER.info('Deleting Twinkly')
+        LOGGER.info('Deleting August')
 
     def check_profile(self):
         self.profile_info = get_profile_info(LOGGER)
@@ -135,14 +142,15 @@ class Controller(polyinterface.Controller):
     }
     drivers = [{'driver': 'ST', 'value': 1, 'uom': 2}]
 
-class TwinklyLight(polyinterface.Node):
+class AugustLock(polyinterface.Node):
 
-    def __init__(self, controller, primary, address, name, hostmac):
+    def __init__(self, controller, primary, address, name, api, authentication, lock):
 
         super(TwinklyLight, self).__init__(controller, primary, address, name)
         self.queryON = True
-        self.myHost, self.mac = hostmac.split(';')
-        self.myTwinkly = xled.ControlInterface(self.myHost, self.mac)
+        self.api = api
+        self.authentication = authentication
+        self.lock = lock
 
     def start(self):
         self.query()
