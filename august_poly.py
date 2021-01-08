@@ -13,6 +13,7 @@ import sys
 from copy import deepcopy
 from august.api import Api 
 from august.authenticator import Authenticator, AuthenticationState
+from august.lock import LockDetail, LockDoorStatus, LockStatus
 
 
 LOGGER = polyinterface.LOGGER
@@ -109,7 +110,7 @@ class Controller(polyinterface.Controller):
                 self.addNode(AugustLock(self,myhash, "lock_" + str(count) ,  "lock_" + str(count),api, authentication, lock ))
                 count = count + 1
         else :
-            LOGGER.error('August requires validation')
+            LOGGER.error('August requires validation, please manually create your augustToken')
         
     def delete(self):
         LOGGER.info('Deleting August')
@@ -146,7 +147,7 @@ class AugustLock(polyinterface.Node):
 
     def __init__(self, controller, primary, address, name, api, authentication, lock):
 
-        super(TwinklyLight, self).__init__(controller, primary, address, name)
+        super(AugustLock, self).__init__(controller, primary, address, name)
         self.queryON = True
         self.api = api
         self.authentication = authentication
@@ -156,40 +157,35 @@ class AugustLock(polyinterface.Node):
         self.query()
 
     def setOn(self, command):
-        self.myTwinkly.set_mode('movie')
+        self.api.lock(self.authentication.access_token,self.lock.device_id)
         self.setDriver('ST', 100,True)
         
     def setOff(self, command):
-        self.myTwinkly.set_mode('off')
+        self.api.unlock(self.authentication.access_token,self.lock.device_id)
         self.setDriver('ST', 0,True)
-        
-    def setBrightness(self, command):
-        intBri = int(command.get('value'))
-        self.myTwinkly.set_brightness(intBri)
-        self.setDriver('GV1', intBri,True)
- 
+      
     def query(self):
-        if ( self.myTwinkly.getMode() != 'off' ) :
-           self.setDriver('ST', 100,True) 
+        if self.api.get_lock_status(self.authentication.access_token,self.lock.device_id) is LockStatus.LOCKED :
+            self.setDriver('ST', 100,True) 
         else :
-           self.setDriver('ST', 0,True) 
+            self.setDriver('ST', 0,True) 
         
-        self.setDriver('GV1', self.myTwinkly.get_brightness() , True)
-        pass
+        battlevel = self.api.get_lock_detail(self.authentication.access_token,self.lock.device_id).battery_level
+        self.setDriver('GV1', int(battlevel) , True)
+        
                         
-    drivers = [{'driver': 'ST', 'value': 0, 'uom': 78},
+    drivers = [{'driver': 'ST', 'value': 0, 'uom': 11},
                {'driver': 'GV1', 'value': 0, 'uom': 51}]
 
-    id = 'TWINKLY_LIGHT'
+    id = 'AUGUST_LOCK'
     commands = {
                     'DON': setOn,
-                    'DOF': setOff,
-                    'SET_BRI': setBrightness
+                    'DOF': setOff
                 }
 
 if __name__ == "__main__":
     try:
-        polyglot = polyinterface.Interface('TwinklyNodeServer')
+        polyglot = polyinterface.Interface('AugustNodeServer')
         polyglot.start()
         control = Controller(polyglot)
         control.runForever()
