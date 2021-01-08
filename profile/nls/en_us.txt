@@ -1,0 +1,14 @@
+# controller
+ST-controller-ST-NAME = Connected
+
+ND-AUGUST_LIGHT-NAME = August Lock
+ND-AUGUST_LIGHT-ICON = DoorLock
+ND-controller-NAME = August Controller
+ND-controller-ICON = GenericCtl
+CMD-DISCOVER-NAME = Discover
+CMD-INSTALL_PROFILE-NAME = Install Profile
+
+ST-GV1-NAME = Battery
+
+CMD-DON-NAME = Lock
+CMD-DOF-NAME = Unlock
