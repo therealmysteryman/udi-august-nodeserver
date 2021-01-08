@@ -1,0 +1,37 @@
+{
+    "name": "AugustLock",
+    "docs": "https://github.com/therealmysteryman/udi-august-nodeserver/blob/master/README.md",
+    "type": "python3",
+    "executable": "august_poly.py",
+    "install": "install.sh",
+    "shortPoll": "60",
+    "longPoll": "300",
+    "description": "Connect August Connect Lock to the ISY994.",
+    "notice": "https://github.com/therealmysteryman/udi-august-nodeserver/blob/master/LICENSE",
+    "credits": [
+        {
+            "title": "AugustLock: A Polyglot v2 interface to August Connect Lock",
+            "author": "AutomationGeek",
+            "version": "2.0.0",
+            "date": "January 7, 2021",
+            "source": "https://github.com/therealmysteryman/udi-august-nodeserver",
+            "license": "https://github.com/therealmysteryman/udi-august-nodeserver/blob/master/README.md"
+        },
+	{
+            "title": "udi-poly-template-python: A Polyglot v2 Poly template",
+            "author": "James Milne (Einstein.42)",
+            "version": "2.0.0",
+            "date": "November 8, 2017",
+            "source": "https://github.com/Einstein42/udi-poly-template-python",
+            "license": "https://raw.githubusercontent.com/Einstein42/udi-poly-template-python/master/LICENSE"
+        },
+	{
+            "title": "Python August Connect API client",
+            "author": "snjoetw",
+            "version": "0.0.0",
+            "date": "October 31, 2020",
+            "source": "https://github.com/snjoetw/py-august",
+            "license": "https://github.com/snjoetw/py-august/blob/main/LICENSE"
+        }
+    ]
+}
