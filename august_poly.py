@@ -101,7 +101,7 @@ class Controller(polyinterface.Controller):
         count = 1
         
         api = Api(timeout=20)
-        authenticator = Authenticator(api, "email", self.email, self.password, install_id=self.install_id, access_token_cache_file="augustToken.txt")
+        authenticator = Authenticator(api, "email", self.email, self.password, install_id=self.install_id, access_token_cache_file="/var/polyglot/nodeservers/august/augustToken.txt")
         authentication = authenticator.authenticate()
         if ( authentication.state is AuthenticationState.AUTHENTICATED ) :
             locks = api.get_locks(authentication.access_token)
