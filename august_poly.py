@@ -106,7 +106,7 @@ class Controller(polyinterface.Controller):
         if ( authentication.state is AuthenticationState.AUTHENTICATED ) :
             locks = api.get_locks(authentication.access_token)
             for lock in locks:
-                myhash =  str(int(hashlib.md5(locks.device_id.encode('utf8')).hexdigest(), 16) % (10 ** 8))
+                myhash =  str(int(hashlib.md5(lock.device_id.encode('utf8')).hexdigest(), 16) % (10 ** 8))
                 self.addNode(AugustLock(self,myhash, "lock_" + str(count) ,  "lock_" + str(count),api, authentication, lock ))
                 count = count + 1
         else :
