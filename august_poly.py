@@ -173,6 +173,7 @@ class AugustLock(polyinterface.Node):
         battlevel = self.api.get_lock_detail(self.authentication.access_token,self.lock.device_id).battery_level
         self.setDriver('GV1', int(battlevel) , True)
         
+        #lastUser = self.api.get_house_activities(self.authentication.access_token,self.lock.house_id)[0].operated_by
                         
     drivers = [{'driver': 'ST', 'value': 0, 'uom': 11},
                {'driver': 'GV1', 'value': 0, 'uom': 51}]
