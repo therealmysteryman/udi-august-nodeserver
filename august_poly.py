@@ -45,7 +45,7 @@ class Controller(polyinterface.Controller):
         self.hb = 0
 
     def start(self):
-        LOGGER.info('Started Twinkly for v2 NodeServer version %s', str(VERSION))
+        LOGGER.info('Started August for v2 NodeServer version %s', str(VERSION))
         self.setDriver('ST', 0)
         try:
             if 'email' in self.polyConfig['customParams']:
@@ -101,13 +101,13 @@ class Controller(polyinterface.Controller):
         count = 1
         
         api = Api(timeout=20)
-        authenticator = Authenticator(api, "email", self.email, self.password, install_id=self.install_id, access_token_cache_file="/var/polyglot/nodeservers/august/augustToken.txt")
+        authenticator = Authenticator(api, "email", self.email, self.password, install_id=self.install_id, access_token_cache_file="/var/polyglot/nodeservers/AugustLock/augustToken.txt")
         authentication = authenticator.authenticate()
         if ( authentication.state is AuthenticationState.AUTHENTICATED ) :
             locks = api.get_locks(authentication.access_token)
             for lock in locks:
                 myhash =  str(int(hashlib.md5(lock.device_id.encode('utf8')).hexdigest(), 16) % (10 ** 8))
-                self.addNode(AugustLock(self,myhash, "lock_" + str(count) ,  "lock_" + str(count),api, authentication, lock ))
+                self.addNode(AugustLock(self,self.address,myhash,  "lock_" + str(count),api, authentication, lock ))
                 count = count + 1
         else :
             LOGGER.error('August requires validation, please manually create your augustToken')
