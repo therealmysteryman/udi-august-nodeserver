@@ -165,15 +165,18 @@ class AugustLock(polyinterface.Node):
         self.setDriver('ST', 0,True)
       
     def query(self):
-        if self.api.get_lock_status(self.authentication.access_token,self.lock.device_id) is LockStatus.LOCKED :
-            self.setDriver('ST', 100,True) 
-        else :
-            self.setDriver('ST', 0,True) 
-        
-        battlevel = self.api.get_lock_detail(self.authentication.access_token,self.lock.device_id).battery_level
-        self.setDriver('GV1', int(battlevel) , True)
-        
-        #lastUser = self.api.get_house_activities(self.authentication.access_token,self.lock.house_id)[0].operated_by
+        try :
+            if self.api.get_lock_status(self.authentication.access_token,self.lock.device_id) is LockStatus.LOCKED :
+                self.setDriver('ST', 100,True) 
+            else :
+                self.setDriver('ST', 0,True) 
+
+            battlevel = self.api.get_lock_detail(self.authentication.access_token,self.lock.device_id).battery_level
+            self.setDriver('GV1', int(battlevel) , True)
+
+            #lastUser = self.api.get_house_activities(self.authentication.access_token,self.lock.house_id)[0].operated_by
+        except Exception as ex:
+            LOGGER.warning('query: %s', str(ex))
                         
     drivers = [{'driver': 'ST', 'value': 0, 'uom': 11},
                {'driver': 'GV1', 'value': 0, 'uom': 51}]
