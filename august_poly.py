@@ -81,7 +81,7 @@ class Controller(polyinterface.Controller):
         self.setDriver('ST', 1)
         self.reportDrivers()
         for node in self.nodes:
-            if node != self.address and self.nodes[node].queryON == True :
+            if node.address != self.address and self.nodes[node].queryON == True :
                 self.nodes[node].query()
 
     def longPoll(self):
@@ -139,7 +139,7 @@ class Controller(polyinterface.Controller):
 
     id = 'controller'
     commands = {
-        'QUERY': query,
+        'QUERY': shortPoll,
         'DISCOVER': discover,
         'INSTALL_PROFILE': install_profile,
     }
