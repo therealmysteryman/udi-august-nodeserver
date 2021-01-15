@@ -49,7 +49,7 @@ class Controller(polyinterface.Controller):
 
     def start(self):
         LOGGER.info('Started August for v2 NodeServer version %s', str(VERSION))
-        self.setDriver('ST', 0)
+        self.setDriver('ST', 1)
         try:
             if 'email' in self.polyConfig['customParams']:
                 self.email = self.polyConfig['customParams']['email']
@@ -78,7 +78,7 @@ class Controller(polyinterface.Controller):
             LOGGER.error('Error starting August NodeServer: %s', str(ex))
            
     def shortPoll(self):
-        self.setDriver('ST', 1)
+        self.setDriver('ST', 0)
         self.reportDrivers()
         for node in self.nodes:
             if  self.nodes[node].queryON == True :
