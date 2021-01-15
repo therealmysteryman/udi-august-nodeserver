@@ -70,23 +70,19 @@ class Controller(polyinterface.Controller):
             else:
                 self.check_profile()
                 self.discover()
-                self.query()
 
         except Exception as ex:
             LOGGER.error('Error starting August NodeServer: %s', str(ex))
            
     def shortPoll(self):
-        self.query()
-
-    def longPoll(self):
-        self.heartbeat()
-
-    def query(self):
         self.setDriver('ST', 1)
+        self.reportDrivers()
         for node in self.nodes:
             if self.nodes[node].queryON == True :
                 self.nodes[node].query()
-            self.nodes[node].reportDrivers()
+
+    def longPoll(self):
+        self.heartbeat()
 
     def heartbeat(self):
         LOGGER.debug('heartbeat: hb={}'.format(self.hb))
@@ -173,6 +169,8 @@ class AugustLock(polyinterface.Node):
 
             battlevel = self.api.get_lock_detail(self.authentication.access_token,self.lock.device_id).battery_level
             self.setDriver('GV1', int(battlevel) , True)
+            
+            self.reportDrivers()
 
             #lastUser = self.api.get_house_activities(self.authentication.access_token,self.lock.house_id)[0].operated_by
         except Exception as ex:
