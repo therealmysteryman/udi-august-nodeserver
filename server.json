@@ -5,15 +5,15 @@
     "executable": "august_poly.py",
     "install": "install.sh",
     "shortPoll": "60",
-    "longPoll": "300",
+    "longPoll": "3600",
     "description": "Connect August Connect Lock to the ISY994.",
     "notice": "https://github.com/therealmysteryman/udi-august-nodeserver/blob/master/LICENSE",
     "credits": [
         {
             "title": "AugustLock: A Polyglot v2 interface to August Connect Lock",
             "author": "AutomationGeek",
-            "version": "2.0.0",
-            "date": "January 7, 2021",
+            "version": "2.0.1",
+            "date": "January 15, 2021",
             "source": "https://github.com/therealmysteryman/udi-august-nodeserver",
             "license": "https://github.com/therealmysteryman/udi-august-nodeserver/blob/master/README.md"
         },
