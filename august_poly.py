@@ -78,7 +78,7 @@ class Controller(polyinterface.Controller):
             LOGGER.error('Error starting August NodeServer: %s', str(ex))
            
     def shortPoll(self):
-        self.setDriver('ST', 0)
+        self.setDriver('ST', 1)
         self.reportDrivers()
         for node in self.nodes:
             if  self.nodes[node].queryON == True :
