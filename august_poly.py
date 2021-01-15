@@ -43,6 +43,9 @@ class Controller(polyinterface.Controller):
         self.install_id = ""
         self.tries = 0
         self.hb = 0
+        self.api = None
+        self.authenticator = None
+        self.authentication = None
 
     def start(self):
         LOGGER.info('Started August for v2 NodeServer version %s', str(VERSION))
@@ -83,6 +86,9 @@ class Controller(polyinterface.Controller):
 
     def longPoll(self):
         self.heartbeat()
+        
+        # Refresh Token
+        self.authenticator.refresh_access_token()
 
     def heartbeat(self):
         LOGGER.debug('heartbeat: hb={}'.format(self.hb))
@@ -96,14 +102,14 @@ class Controller(polyinterface.Controller):
     def discover(self, *args, **kwargs):
         count = 1
         
-        api = Api(timeout=20)
-        authenticator = Authenticator(api, "email", self.email, self.password, install_id=self.install_id, access_token_cache_file="/var/polyglot/nodeservers/AugustLock/augustToken.txt")
-        authentication = authenticator.authenticate()
-        if ( authentication.state is AuthenticationState.AUTHENTICATED ) :
-            locks = api.get_locks(authentication.access_token)
+        self.api = Api(timeout=20)
+        self.authenticator = Authenticator(api, "email", self.email, self.password, install_id=self.install_id, access_token_cache_file="/var/polyglot/nodeservers/AugustLock/augustToken.txt")
+        self.authentication = self.authenticator.authenticate()
+        if ( self.authentication.state is AuthenticationState.AUTHENTICATED ) :
+            locks = self.api.get_locks(authentication.access_token)
             for lock in locks:
                 myhash =  str(int(hashlib.md5(lock.device_id.encode('utf8')).hexdigest(), 16) % (10 ** 8))
-                self.addNode(AugustLock(self,self.address,myhash,  "lock_" + str(count),api, authentication, lock ))
+                self.addNode(AugustLock(self,self.address,myhash,  "lock_" + str(count),self.api, self.authentication, self.lock ))
                 count = count + 1
         else :
             LOGGER.error('August requires validation, please manually create your augustToken')
@@ -150,7 +156,7 @@ class AugustLock(polyinterface.Node):
         self.lock = lock
 
     def start(self):
-        self.query()
+        pass
 
     def setOn(self, command):
         self.api.lock(self.authentication.access_token,self.lock.device_id)
@@ -175,7 +181,7 @@ class AugustLock(polyinterface.Node):
             #lastUser = self.api.get_house_activities(self.authentication.access_token,self.lock.house_id)[0].operated_by
         except Exception as ex:
             LOGGER.warning('query: %s', str(ex))
-                        
+
     drivers = [{'driver': 'ST', 'value': 0, 'uom': 11},
                {'driver': 'GV1', 'value': 0, 'uom': 51}]
 
