@@ -103,13 +103,13 @@ class Controller(polyinterface.Controller):
         count = 1
         
         self.api = Api(timeout=20)
-        self.authenticator = Authenticator(api, "email", self.email, self.password, install_id=self.install_id, access_token_cache_file="/var/polyglot/nodeservers/AugustLock/augustToken.txt")
+        self.authenticator = Authenticator(self.api, "email", self.email, self.password, install_id=self.install_id, access_token_cache_file="/var/polyglot/nodeservers/AugustLock/augustToken.txt")
         self.authentication = self.authenticator.authenticate()
         if ( self.authentication.state is AuthenticationState.AUTHENTICATED ) :
-            locks = self.api.get_locks(authentication.access_token)
+            locks = self.api.get_locks(self.authentication.access_token)
             for lock in locks:
                 myhash =  str(int(hashlib.md5(lock.device_id.encode('utf8')).hexdigest(), 16) % (10 ** 8))
-                self.addNode(AugustLock(self,self.address,myhash,  "lock_" + str(count),self.api, self.authentication, self.lock ))
+                self.addNode(AugustLock(self,self.address,myhash,  "lock_" + str(count),self.api, self.authentication, lock ))
                 count = count + 1
         else :
             LOGGER.error('August requires validation, please manually create your augustToken')
