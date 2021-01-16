@@ -112,7 +112,8 @@ class Controller(polyinterface.Controller):
                 self.addNode(AugustLock(self,self.address,myhash,  "lock_" + str(count),self.api, self.authentication, lock ))
                 count = count + 1
         else :
-            LOGGER.error('August requires validation, please manually create your augustToken')
+            self.authenticator.send_verification_code()
+            LOGGER.error('August requires validation, please send your authentification code')
         
     def delete(self):
         LOGGER.info('Deleting August')
@@ -137,8 +138,14 @@ class Controller(polyinterface.Controller):
         LOGGER.info("install_profile:")
         self.poly.installprofile()
         
-    def send_validation_code :
-        LOGGER.info("send_validation_code:")
+    def send_validation_code(self,command) :
+        LOGGER.info("Send Validation Code")
+        print ("test")
+        #val = int(command.get('value'))
+        #validation_result = self.authenticator.validate_verification_code(val)
+        #self.authentication = authenticator.authenticate()
+        #if ( self.authentication.state not is AuthenticationState.AUTHENTICATED ) :
+        #    LOGGER.info("Invalid Authentication Code")
 
     id = 'controller'
     commands = {
