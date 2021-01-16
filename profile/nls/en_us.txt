@@ -9,8 +9,8 @@ ND-controller-ICON = GenericCtl
 CMD-VALIDATE_CODE-NAME = Send Validation Code
 CMD-DISCOVER-NAME = Discover
 CMD-INSTALL_PROFILE-NAME = Install Profile
-CMD-UNLOCK-NAME = Unlock
-CMD-LOCK-NAME = Lock
+CMD-MGR-UNLOCK-NAME = Unlock
+CMD-MGR-LOCK-NAME = Lock
 
 ST-GV1-NAME = Battery
 ST-GV2-NAME = Lock Status
