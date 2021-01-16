@@ -136,12 +136,16 @@ class Controller(polyinterface.Controller):
     def install_profile(self,command):
         LOGGER.info("install_profile:")
         self.poly.installprofile()
+        
+    def send_validation_code :
+        LOGGER.info("send_validation_code:")
 
     id = 'controller'
     commands = {
         'QUERY': shortPoll,
         'DISCOVER': discover,
         'INSTALL_PROFILE': install_profile,
+        'VALIDATION_CODE': send_validation_code
     }
     drivers = [{'driver': 'ST', 'value': 1, 'uom': 2}, 
                {'driver': 'GV3', 'value': 0, 'uom': 56}]
