@@ -1,14 +1,15 @@
 # August-nodeserver
 
-This Poly provides an interface between August Connect and Polyglot v2 server. This a POC and very rough polyglot, but does work to control one lock.
+This Poly provides an interface between August Connect and Polyglot v2 server. This is very rough polyglot, but does work to control one lock. If anyone want to take over
+this nodeserver for futher enhancement is welcome. Has only been tested on Polisy.
 
 #### Installation
 
-You can install manually :
+You can install manually or the store:
 
 1. cd ~/.polyglot/nodeservers
 2. git clone https://github.com/therealmysteryman/udi-august-nodeserver.git
 3. run ./install.sh to install the required dependency.
-4. Create a custom variable named email, password and install_id (generate your own UUID)
-5. Generate Token file using those scripts (createToken.py,verifyToken.py)
-6. Copy file containing the key has to be in this location and need to use that name ( /var/polyglot/nodeservers/AugustLock/augustToken.txt )
+4. Create a custom variable named email, password and install_id (generate your own UUID 11111111-1111-1111-1111-111111111111 ) 
+5. First time your run the nodeserver, you should receive a validation code by email, enter the validation code in August Node and click Send Validation. 
+   Once your get a message in the log saying it has been validated, restart the node server and your lock should appear.
