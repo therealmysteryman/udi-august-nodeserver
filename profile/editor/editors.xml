@@ -9,9 +9,12 @@
         <range uom="11" subset="0,100" />
     </editor>
         
-    <!-- Brightness Editor -->
     <editor id="LKBATT">
         <range uom="51" min="1" max="100" prec="0" step="1" />
     </editor>
         
+    <editor id="VCODE">
+        <range uom="56" min="0" max="999999" prec="0" />
+    </editor>
+    
 </editors>
