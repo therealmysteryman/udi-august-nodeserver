@@ -140,19 +140,20 @@ class Controller(polyinterface.Controller):
         
     def send_validation_code(self,command) :
         LOGGER.info("Send Validation Code")
-        print ("test")
-        #val = int(command.get('value'))
-        #validation_result = self.authenticator.validate_verification_code(val)
-        #self.authentication = authenticator.authenticate()
-        #if ( self.authentication.state not is AuthenticationState.AUTHENTICATED ) :
-        #    LOGGER.info("Invalid Authentication Code")
+        val = int(command.get('value'))
+        validation_result = self.authenticator.validate_verification_code(val)
+        self.authentication = authenticator.authenticate()
+        if ( self.authentication.state not is AuthenticationState.AUTHENTICATED ) :
+            LOGGER.info("Invalid Authentication Code")
+        else :
+            LOGGER.info("Successfully Authentificated")
 
     id = 'controller'
     commands = {
         'QUERY': shortPoll,
         'DISCOVER': discover,
         'INSTALL_PROFILE': install_profile,
-        'VALIDATION_CODE': send_validation_code
+        'VALIDATE_CODE': send_validation_code,
     }
     drivers = [{'driver': 'ST', 'value': 1, 'uom': 2}, 
                {'driver': 'GV3', 'value': 0, 'uom': 56}]
