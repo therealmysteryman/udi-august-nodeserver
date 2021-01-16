@@ -10,12 +10,12 @@
               <cmd id="DOF" />
             </sends>
             <accepts>
-              <cmd id="VALIDATE_CODE">
+                <cmd id="VALIDATE_CODE">
                     <p id="" editor="VCODE" />
-              </cmd>  
-              <cmd id="QUERY" />
-              <cmd id="DISCOVER" />
-              <cmd id="INSTALL_PROFILE" />
+                </cmd>  
+                <cmd id="QUERY" />
+                <cmd id="DISCOVER" />
+                <cmd id="INSTALL_PROFILE" />
             </accepts>
         </cmds>
     </nodeDef>
