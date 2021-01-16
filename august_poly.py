@@ -143,7 +143,8 @@ class Controller(polyinterface.Controller):
         'DISCOVER': discover,
         'INSTALL_PROFILE': install_profile,
     }
-    drivers = [{'driver': 'ST', 'value': 1, 'uom': 2}]
+    drivers = [{'driver': 'ST', 'value': 1, 'uom': 2}, 
+               {'driver': 'GV3', 'value': 0, 'uom': 56}]
 
 class AugustLock(polyinterface.Node):
 
@@ -182,13 +183,13 @@ class AugustLock(polyinterface.Node):
         except Exception as ex:
             LOGGER.warning('query: %s', str(ex))
 
-    drivers = [{'driver': 'ST', 'value': 100, 'uom': 11},
+    drivers = [{'driver': 'GV2', 'value': 100, 'uom': 11},
                {'driver': 'GV1', 'value': 0, 'uom': 51}]
 
     id = 'AUGUST_LOCK'
     commands = {
-                    'DON': setOn,
-                    'DOF': setOff
+                    'LOCK': setOn,
+                    'UNLOCK': setOff
                 }
 
 if __name__ == "__main__":
