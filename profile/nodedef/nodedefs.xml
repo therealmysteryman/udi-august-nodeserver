@@ -19,14 +19,14 @@
     <nodeDef id="AUGUST_LOCK" nls="MGR">
         <editors />
         <sts>
-            <st id="ST" editor="LKSTATUS" />
+            <st id="GV2" editor="LKSTATUS" />
             <st id="GV1" editor="LKBATT" /> 
         </sts>
         <cmds>
             <sends />
             <accepts>
-                <cmd id="DON" />
-                <cmd id="DOF" />
+                <cmd id="LOCK" />
+                <cmd id="UNLOCK" />
             </accepts>
         </cmds>
     </nodeDef>
