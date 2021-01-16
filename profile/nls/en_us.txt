@@ -7,6 +7,7 @@ ND-controller-NAME = August Controller
 ND-controller-ICON = GenericCtl
 CMD-DISCOVER-NAME = Discover
 CMD-INSTALL_PROFILE-NAME = Install Profile
+CMD-AUGUST_LOCK-VALIDATE_CODE-NAME = Send Validation Code
 
 ST-GV1-NAME = Battery
 ST-GV2-NAME = Lock Status
