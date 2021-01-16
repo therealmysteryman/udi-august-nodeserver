@@ -9,6 +9,8 @@ CMD-DISCOVER-NAME = Discover
 CMD-INSTALL_PROFILE-NAME = Install Profile
 
 ST-GV1-NAME = Battery
+ST-GV2-NAME = Lock Status
+ST-GV3-NAME = Validation Code
 
 CMD-DON-NAME = Lock
 CMD-DOF-NAME = Unlock
