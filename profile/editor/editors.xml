@@ -14,7 +14,7 @@
     </editor>
         
     <editor id="VCODE">
-        <range uom="56" min="0" max="999999" prec="0" />
+        <range uom="25" min="0" max="999999" prec="0" />
     </editor>
     
 </editors>
