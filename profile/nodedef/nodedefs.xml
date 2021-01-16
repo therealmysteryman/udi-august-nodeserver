@@ -23,7 +23,12 @@
             <st id="GV1" editor="LKBATT" /> 
         </sts>
         <cmds>
-            <sends />
+            <sends>
+                <cmd id="VALIDATE_CODE">
+                    <p id="" editor="VCODE" />
+                </cmd>    
+            </sends>
+        </cmd>
             <accepts>
                 <cmd id="LOCK" />
                 <cmd id="UNLOCK" />
