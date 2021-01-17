@@ -26,7 +26,10 @@
             <st id="GV1" editor="LKBATT" /> 
         </sts>
         <cmds>
-            <sends />
+            <sends>
+              <cmd id="LOCK" />
+              <cmd id="UNLOCK" />
+            </sends>
             <accepts>
                 <cmd id="LOCK" />
                 <cmd id="UNLOCK" />
