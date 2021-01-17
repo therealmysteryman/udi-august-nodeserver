@@ -7,6 +7,7 @@ based on the NodeServer template for Polyglot v2 written in Python2/3 by Einstei
 
 import polyinterface
 import hashlib
+import uuid
 import time
 import json
 import sys
@@ -65,7 +66,9 @@ class Controller(polyinterface.Controller):
             if 'install_id' in self.polyConfig['customParams']:
                 self.install_id = self.polyConfig['customParams']['install_id']
             else:
-                self.install_id = "" 
+                self.install_id = str(uuid.uuid4())
+                self.saveCustomData({ 'install_id': self.install_id })
+                LOGGER.debug('UUID Generated: {}'.format(self.install_id))
 
             if self.email == "" or self.password == "" or self.install_id == "":
                 LOGGER.error('August requires email,password,install_id parameters to be specified in custom configuration.')
