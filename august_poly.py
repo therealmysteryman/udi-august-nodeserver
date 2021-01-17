@@ -169,24 +169,24 @@ class AugustLock(polyinterface.Node):
         self.lock = lock
 
     def start(self):
-        self.setDriver('ST', 100)
+        self.setDriver('GV2', 100)
 
     def setOn(self, command):
         self.api.lock(self.authentication.access_token,self.lock.device_id)
-        self.setDriver('ST', 100)
+        self.setDriver('GV2', 100)
         self.reportCmd("LOCK",2)
         
     def setOff(self, command):
         self.api.unlock(self.authentication.access_token,self.lock.device_id)
-        self.setDriver('ST', 0)
+        self.setDriver('GV2', 0)
         self.reportCmd("UNLOCK",2)
       
     def query(self):
         try :
             if self.api.get_lock_status(self.authentication.access_token,self.lock.device_id) is LockStatus.UNLOCKED :
-                self.setDriver('ST', 0) 
+                self.setDriver('GV2', 0) 
             else :
-                self.setDriver('ST', 100) 
+                self.setDriver('GV2', 100) 
 
             battlevel = self.api.get_lock_detail(self.authentication.access_token,self.lock.device_id).battery_level
             self.setDriver('GV1', int(battlevel))
