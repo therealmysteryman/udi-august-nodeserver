@@ -143,7 +143,7 @@ class Controller(polyinterface.Controller):
         val = int(command.get('value'))
         validation_result = self.authenticator.validate_verification_code(val)
         self.authentication = authenticator.authenticate()
-        if ( self.authentication.state not is AuthenticationState.AUTHENTICATED ) :
+        if ( self.authentication.state is not AuthenticationState.AUTHENTICATED ) :
             LOGGER.info("Invalid Authentication Code")
         else :
             LOGGER.info("Successfully Authentificated")
@@ -174,10 +174,12 @@ class AugustLock(polyinterface.Node):
     def setOn(self, command):
         self.api.lock(self.authentication.access_token,self.lock.device_id)
         self.setDriver('ST', 100)
+        self.reportCmd("LOCK",2)
         
     def setOff(self, command):
         self.api.unlock(self.authentication.access_token,self.lock.device_id)
         self.setDriver('ST', 0)
+        self.reportCmd("UNLOCK",2)
       
     def query(self):
         try :
