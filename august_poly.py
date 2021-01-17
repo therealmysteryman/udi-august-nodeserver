@@ -174,12 +174,12 @@ class AugustLock(polyinterface.Node):
     def setOn(self, command):
         self.api.lock(self.authentication.access_token,self.lock.device_id)
         self.setDriver('GV2', 100)
-        self.reportCmd("LOCK",2)
+        self.reportCmd('LOCK')
         
     def setOff(self, command):
         self.api.unlock(self.authentication.access_token,self.lock.device_id)
         self.setDriver('GV2', 0)
-        self.reportCmd("UNLOCK",2)
+        self.reportCmd('UNLOCK')
       
     def query(self):
         try :
