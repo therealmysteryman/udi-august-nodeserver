@@ -70,8 +70,13 @@ class Controller(polyinterface.Controller):
                 self.saveCustomData({ 'install_id': self.install_id })
                 LOGGER.debug('UUID Generated: {}'.format(self.install_id))
 
-            if self.email == "" or self.password == "" or self.install_id == "":
-                LOGGER.error('August requires email,password,install_id parameters to be specified in custom configuration.')
+            if 'tokenFilePath' in self.polyConfig['customParams']:
+                self.tokenFilePath = self.polyConfig['customParams']['tokenFilePath']
+            else:
+                self.tokenFilePath = ""
+                
+            if self.email == "" or self.password == "" or self.tokenFilePath == "":
+                LOGGER.error('August requires email,password,tokenFilePath parameters to be specified in custom configuration.')
                 return False
             else:
                 self.check_profile()
@@ -106,7 +111,7 @@ class Controller(polyinterface.Controller):
         count = 1
         
         self.api = Api(timeout=20)
-        self.authenticator = Authenticator(self.api, "email", self.email, self.password, install_id=self.install_id, access_token_cache_file="/var/polyglot/nodeservers/AugustLock/augustToken.txt")
+        self.authenticator = Authenticator(self.api, "email", self.email, self.password, install_id=self.install_id, access_token_cache_file=self.tokenFilePath)
         self.authentication = self.authenticator.authenticate()
         if ( self.authentication.state is AuthenticationState.AUTHENTICATED ) :
             locks = self.api.get_locks(self.authentication.access_token)
