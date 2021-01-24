@@ -37,12 +37,10 @@ class Controller(polyinterface.Controller):
     def __init__(self, polyglot):
         super(Controller, self).__init__(polyglot)
         self.name = 'August'
-        self.initialized = False
         self.queryON = False
         self.email = ""
         self.password = ""
         self.install_id = ""
-        self.tries = 0
         self.hb = 0
         self.api = None
         self.authenticator = None
@@ -84,13 +82,16 @@ class Controller(polyinterface.Controller):
 
         except Exception as ex:
             LOGGER.error('Error starting August NodeServer: %s', str(ex))
-           
+    
+    def query(self):
+        for node in self.nodes:
+            self.nodes[node].reportDrivers()
+    
     def shortPoll(self):
         self.setDriver('ST', 1)
-        self.reportDrivers()
         for node in self.nodes:
             if  self.nodes[node].queryON == True :
-                self.nodes[node].query()
+                self.nodes[node].update()
 
     def longPoll(self):
         self.heartbeat()
@@ -158,7 +159,7 @@ class Controller(polyinterface.Controller):
 
     id = 'controller'
     commands = {
-        'QUERY': shortPoll,
+        'QUERY': query,
         'DISCOVER': discover,
         'INSTALL_PROFILE': install_profile,
         'VALIDATE_CODE': send_validation_code,
@@ -188,8 +189,11 @@ class AugustLock(polyinterface.Node):
         self.api.unlock(self.authentication.access_token,self.lock.device_id)
         self.setDriver('GV2', 0)
         self.reportCmd('UNLOCK')
-      
+    
     def query(self):
+        self.reportDrivers()
+    
+    def update(self):
         try :
             if self.api.get_lock_status(self.authentication.access_token,self.lock.device_id) is LockStatus.UNLOCKED :
                 self.setDriver('GV2', 0) 
@@ -198,9 +202,7 @@ class AugustLock(polyinterface.Node):
 
             battlevel = self.api.get_lock_detail(self.authentication.access_token,self.lock.device_id).battery_level
             self.setDriver('GV1', int(battlevel))
-            
-            self.reportDrivers()
-
+           
             #lastUser = self.api.get_house_activities(self.authentication.access_token,self.lock.house_id)[0].operated_by
         except Exception as ex:
             LOGGER.warning('query: %s', str(ex))
