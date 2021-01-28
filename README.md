@@ -1,6 +1,6 @@
 # AugustLock NodeServer
 
-This Poly provides an interface between August Connect and Polyglot v2 server. This is very rough polyglot, but does work to control one lock. If anyone want to take over this nodeserver for futher enhancement is welcome. Has only been tested on Polisy.
+This Poly provides an interface between August Connect and Polyglot v2 server. This is very rough polyglot, but does work to control one lock. Has only been tested on Polisy.
 
 #### Installation
 
