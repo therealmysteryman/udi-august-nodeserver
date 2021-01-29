@@ -72,7 +72,13 @@ class Controller(polyinterface.Controller):
                 self.tokenFilePath = self.polyConfig['customParams']['tokenFilePath']
             else:
                 self.tokenFilePath = ""
-                
+            
+            # {'John Doe': 1, 'Paul Doe':2}
+            if 'userDict' in self.polyConfig['customParams']:
+                self.userDict = self.polyConfig['customParams']['userDict']
+            else:
+                self.userDict = ""
+            
             if self.email == "" or self.password == "" or self.tokenFilePath == "":
                 LOGGER.error('August requires email,password,tokenFilePath parameters to be specified in custom configuration.')
                 return False
@@ -213,13 +219,19 @@ class AugustLock(polyinterface.Node):
 
             lastUser = self.api.get_house_activities(self.authentication.access_token,self.lock.house_id)[0].operated_by
             print(lastUser)
+            if ( lastUser  in self.parent.userDic ) :
+                print ("oui")
+                self.setDriver('GV5',self.parent.userDic[lastUser])
+            else :
+                self.setDriver('GV5',0)
             
         except Exception as ex:
             LOGGER.warning('query: %s', str(ex))
 
     drivers = [{'driver': 'GV2', 'value': 100, 'uom': 11},
                {'driver': 'GV1', 'value': 0, 'uom': 51},
-               {'driver': 'GV4', 'value': 100, 'uom': 79}]
+               {'driver': 'GV4', 'value': 100, 'uom': 79},
+               {'driver': 'GV5', 'value': 0, 'uom': 56}]
 
     id = 'AUGUST_LOCK'
     commands = {
