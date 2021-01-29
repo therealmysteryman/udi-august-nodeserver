@@ -225,7 +225,7 @@ class AugustLock(polyinterface.Node):
                     self.setDriver('GV5',self.parent.userDict[key])
             
         except Exception as ex:
-            LOGGER.warning('query: %s', str(ex))
+            LOGGER.error('query: %s', str(ex))
 
     drivers = [{'driver': 'GV2', 'value': 100, 'uom': 11},
                {'driver': 'GV1', 'value': 0, 'uom': 51},
