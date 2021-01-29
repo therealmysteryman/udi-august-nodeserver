@@ -41,6 +41,7 @@ class Controller(polyinterface.Controller):
         self.email = ""
         self.password = ""
         self.install_id = ""
+        self.userDict = ""
         self.hb = 0
         self.api = None
         self.authenticator = None
@@ -219,9 +220,9 @@ class AugustLock(polyinterface.Node):
 
             lastUser = self.api.get_house_activities(self.authentication.access_token,self.lock.house_id)[0].operated_by
             print(lastUser)
-            if ( lastUser  in self.parent.userDic ) :
+            if ( lastUser  in self.parent.userDict ) :
                 print ("oui")
-                self.setDriver('GV5',self.parent.userDic[lastUser])
+                self.setDriver('GV5',self.parent.userDict[lastUser])
             else :
                 self.setDriver('GV5',0)
             
