@@ -8,6 +8,10 @@
     <editor id="LKSTATUS">
         <range uom="11" subset="0,100" />
     </editor>
+    
+    <editor id="DSTATUS">
+        <range uom="79" subset="0,100" />
+    </editor>
         
     <editor id="LKBATT">
         <range uom="51" min="1" max="100" prec="0" step="1" />
