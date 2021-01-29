@@ -24,6 +24,7 @@
         <sts>
             <st id="GV2" editor="LKSTATUS" />
             <st id="GV1" editor="LKBATT" /> 
+            <st id="GV4" editor="DSTATUS" /> 
         </sts>
         <cmds>
             <sends>
