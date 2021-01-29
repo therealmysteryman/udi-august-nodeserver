@@ -25,6 +25,7 @@
             <st id="GV2" editor="LKSTATUS" />
             <st id="GV1" editor="LKBATT" /> 
             <st id="GV4" editor="DSTATUS" /> 
+            <st id="GV5" editor="VCODE" /> 
         </sts>
         <cmds>
             <sends>
