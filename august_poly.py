@@ -222,10 +222,12 @@ class AugustLock(polyinterface.Node):
                 self.setDriver('GV4', 101)
 
             lastUser = self.api.get_house_activities(self.authentication.access_token,self.lock.house_id)[0].operated_by
-            self.setDriver('GV5',0)
+            
+            val = 0 
             for key in self.userDict  :
                 if key == lastUser :
-                    self.setDriver('GV5',self.userDict[key])
+                    val = self.userDict[key]
+            self.setDriver('GV5',val)
             
         except Exception as ex:
             LOGGER.error('query: %s', str(ex))
