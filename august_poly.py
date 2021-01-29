@@ -211,7 +211,9 @@ class AugustLock(polyinterface.Node):
             else :
                 self.setDriver('GV4', 101)
 
-            #lastUser = self.api.get_house_activities(self.authentication.access_token,self.lock.house_id)[0].operated_by
+            lastUser = self.api.get_house_activities(self.authentication.access_token,self.lock.house_id)[0].operated_by
+            print(lastUser)
+            
         except Exception as ex:
             LOGGER.warning('query: %s', str(ex))
 
