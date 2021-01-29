@@ -202,13 +202,22 @@ class AugustLock(polyinterface.Node):
 
             battlevel = self.api.get_lock_detail(self.authentication.access_token,self.lock.device_id).battery_level
             self.setDriver('GV1', int(battlevel))
-           
+            
+            try :
+                if  self.api.get_lock_door_status(self.authentication.access_token,self.lock.device_id) is LockDoorStatus.OPEN_STATUS :
+                    self.setDriver('GV4', 0)
+                else :
+                    self.setDriver('GV4', 100)
+            except Exception as ex :
+                LOGGER.warning('DoorStatus: %s', str(ex))
+            
             #lastUser = self.api.get_house_activities(self.authentication.access_token,self.lock.house_id)[0].operated_by
         except Exception as ex:
             LOGGER.warning('query: %s', str(ex))
 
     drivers = [{'driver': 'GV2', 'value': 100, 'uom': 11},
-               {'driver': 'GV1', 'value': 0, 'uom': 51}]
+               {'driver': 'GV1', 'value': 0, 'uom': 51},
+               {'driver': 'GV4', 'value': 100, 'uom': 79}]
 
     id = 'AUGUST_LOCK'
     commands = {
