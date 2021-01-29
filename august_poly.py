@@ -202,7 +202,7 @@ class AugustLock(polyinterface.Node):
 
             battlevel = self.api.get_lock_detail(self.authentication.access_token,self.lock.device_id).battery_level
             self.setDriver('GV1', int(battlevel))
-            
+            print(self.api.get_lock_door_status(self.authentication.access_token,self.lock.device_id))
             try :
                 if  self.api.get_lock_door_status(self.authentication.access_token,self.lock.device_id) is LockDoorStatus.OPEN_STATUS :
                     self.setDriver('GV4', 0)
