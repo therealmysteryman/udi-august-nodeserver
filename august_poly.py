@@ -11,6 +11,7 @@ import uuid
 import time
 import json
 import sys
+import ast
 from copy import deepcopy
 from august.api import Api 
 from august.authenticator import Authenticator, AuthenticationState
@@ -183,6 +184,8 @@ class AugustLock(polyinterface.Node):
         self.api = api
         self.authentication = authentication
         self.lock = lock
+        self.userDict = ast.literal_eval(self.parent.userDict)
+
 
     def start(self):
         self.setDriver('GV2', 100)
@@ -220,9 +223,9 @@ class AugustLock(polyinterface.Node):
 
             lastUser = self.api.get_house_activities(self.authentication.access_token,self.lock.house_id)[0].operated_by
             self.setDriver('GV5',0)
-            for key in self.parent.userDict  :
+            for key in self.userDict  :
                 if key == lastUser :
-                    self.setDriver('GV5',self.parent.userDict[key])
+                    self.setDriver('GV5',self.userDict[key])
             
         except Exception as ex:
             LOGGER.error('query: %s', str(ex))
