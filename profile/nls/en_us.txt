@@ -15,3 +15,4 @@ CMD-MGR-LOCK-NAME = Lock
 ST-GV1-NAME = Battery
 ST-GV2-NAME = Lock Status
 ST-GV3-NAME = Validation Code
+ST-GV4-NAME = Door Status
