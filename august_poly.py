@@ -159,7 +159,7 @@ class Controller(polyinterface.Controller):
         LOGGER.info("Send Validation Code")
         val = int(command.get('value'))
         validation_result = self.authenticator.validate_verification_code(val)
-        self.authentication = authenticator.authenticate()
+        self.authentication = self.authenticator.authenticate()
         if ( self.authentication.state is not AuthenticationState.AUTHENTICATED ) :
             LOGGER.info("Invalid Authentication Code")
         else :
