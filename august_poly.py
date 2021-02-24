@@ -79,7 +79,7 @@ class Controller(polyinterface.Controller):
             if 'userDict' in self.polyConfig['customParams']:
                 self.userDict = self.polyConfig['customParams']['userDict']
             else:
-                self.userDict = ""
+                self.userDict = "{'None': 0}"
             
             if self.email == "" or self.password == "" or self.tokenFilePath == "":
                 LOGGER.error('August requires email,password,tokenFilePath parameters to be specified in custom configuration.')
