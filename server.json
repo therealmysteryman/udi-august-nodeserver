@@ -12,8 +12,8 @@
         {
             "title": "AugustLock: A Polyglot v2 interface to August Connect for a Lock. *Experimental use at your own risk* ",
             "author": "AutomationGeek",
-            "version": "2.0.12",
-            "date": "February 24, 2021",
+            "version": "2.0.13",
+            "date": "March 18, 2021",
             "source": "https://github.com/therealmysteryman/udi-august-nodeserver",
             "license": "https://github.com/therealmysteryman/udi-august-nodeserver/blob/master/README.md"
         },
