@@ -47,6 +47,7 @@ class Controller(polyinterface.Controller):
         self.api = None
         self.authenticator = None
         self.authentication = None
+        self.userDictEnable = False
 
     def start(self):
         LOGGER.info('Started August for v2 NodeServer version %s', str(VERSION))
@@ -78,6 +79,7 @@ class Controller(polyinterface.Controller):
             # {'John Doe': 1, 'Paul Doe':2}
             if 'userDict' in self.polyConfig['customParams']:
                 self.userDict = self.polyConfig['customParams']['userDict']
+                self.userDictEnable = True
             else:
                 self.userDict = "{'None': 0}"
             
@@ -184,6 +186,7 @@ class AugustLock(polyinterface.Node):
         self.api = api
         self.authentication = authentication
         self.lock = lock
+        self.userDictEnable = self.parent.userDictEnable
         self.userDict = ast.literal_eval(self.parent.userDict)
 
 
@@ -221,13 +224,13 @@ class AugustLock(polyinterface.Node):
             else :
                 self.setDriver('GV4', 101)
 
-            lastUser = self.api.get_house_activities(self.authentication.access_token,self.lock.house_id)[0].operated_by
-            
-            val = 0 
-            for key in self.userDict  :
-                if key == lastUser :
-                    val = self.userDict[key]
-            self.setDriver('GV5',val)
+            if ( self.userDictEnable ) :
+                lastUser = self.api.get_house_activities(self.authentication.access_token,self.lock.house_id)[0].operated_by
+                val = 0 
+                for key in self.userDict  :
+                    if key == lastUser :
+                        val = self.userDict[key]
+                self.setDriver('GV5',val)
             
         except Exception as ex:
             LOGGER.error('query: %s', str(ex))
