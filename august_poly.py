@@ -14,7 +14,7 @@ import sys
 import ast
 from copy import deepcopy
 from august.api import Api 
-from august.authenticator import Authenticator, AuthenticationState
+from august.authenticator import Authenticator, AuthenticationState, ValidationResult
 from august.lock import LockDetail, LockDoorStatus, LockStatus
 
 
@@ -161,6 +161,10 @@ class Controller(polyinterface.Controller):
         LOGGER.info("Send Validation Code")
         val = int(command.get('value'))
         validation_result = self.authenticator.validate_verification_code(val)
+        
+        if ( validation_result is ValidationResult.INVALID_VERIFICATION_CODE ) :
+            LOGGER.info("Invalid Verification Code : %s", str(val) )
+            
         self.authentication = self.authenticator.authenticate()
         if ( self.authentication.state is not AuthenticationState.AUTHENTICATED ) :
             LOGGER.info("Invalid Authentication Code")
