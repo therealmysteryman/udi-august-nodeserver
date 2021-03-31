@@ -193,9 +193,9 @@ class AugustLock(polyinterface.Node):
         self.userDictEnable = self.parent.userDictEnable
         self.userDict = ast.literal_eval(self.parent.userDict)
 
-
     def start(self):
-        self.setDriver('GV2', 100)
+        self.setDriver('GV2', 101)
+        self.setDriver('GV4', 101)
 
     def setOn(self, command):
         self.api.lock(self.authentication.access_token,self.lock.device_id)
@@ -214,8 +214,10 @@ class AugustLock(polyinterface.Node):
         try :
             if self.api.get_lock_status(self.authentication.access_token,self.lock.device_id) is LockStatus.UNLOCKED :
                 self.setDriver('GV2', 0) 
-            else :
+            elif self.api.get_lock_status(self.authentication.access_token,self.lock.device_id) is LockStatus.LOCKED :
                 self.setDriver('GV2', 100) 
+            else :
+                self.setDriver('GV2', 101) 
 
             battlevel = self.api.get_lock_detail(self.authentication.access_token,self.lock.device_id).battery_level
             self.setDriver('GV1', int(battlevel))
@@ -238,6 +240,9 @@ class AugustLock(polyinterface.Node):
             
         except Exception as ex:
             LOGGER.error('query: %s', str(ex))
+            self.setDriver('GV1', 0)
+            self.setDriver('GV2', 101)
+            self.setDriver('GV4', 101)
 
     drivers = [{'driver': 'GV2', 'value': 100, 'uom': 11},
                {'driver': 'GV1', 'value': 0, 'uom': 51},
