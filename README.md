@@ -1,3 +1,6 @@
+## This nodeserver has been converted to run on PG3. The code has been moved to https://github.com/UniversalDevicesInc-PG3/udi-august-nodeserver
+
+
 # AugustLock NodeServer
 
 This Poly provides an interface between August Connect and Polyglot v2 server. This is very rough polyglot, but does work to control one lock. Has only been tested on Polisy. The status will update based on the shortPoll value.
